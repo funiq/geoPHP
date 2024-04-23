@@ -57,7 +57,7 @@ class LineStringTest extends TestCase
     public function testConstructorEmptyComponentThrowsException()
     {
         $this->expectException(InvalidGeometryException::class);
-        $this->expectExceptionMessageRegExp('/Cannot create a collection of empty Points.+/');
+        $this->expectExceptionMessageMatches('/Cannot create a collection of empty Points.+/');
 
         // Empty points
         new LineString([new Point(), new Point(), new Point()]);
@@ -66,7 +66,7 @@ class LineStringTest extends TestCase
     public function testConstructorNonArrayComponentThrowsException()
     {
         $this->expectException(InvalidGeometryException::class);
-        $this->expectExceptionMessageRegExp('/Component geometries must be passed as array/');
+        $this->expectExceptionMessageMatches('/Component geometries must be passed as array/');
 
         new LineString('foo');
     }
@@ -74,7 +74,7 @@ class LineStringTest extends TestCase
     public function testConstructorSinglePointThrowsException()
     {
         $this->expectException(InvalidGeometryException::class);
-        $this->expectExceptionMessageRegExp('/Cannot construct a [a-zA-Z_\\\\]+LineString with a single point/');
+        $this->expectExceptionMessageMatches('/Cannot construct a [a-zA-Z_\\\\]+LineString with a single point/');
 
         new LineString([new Point(1, 2)]);
     }
@@ -82,7 +82,7 @@ class LineStringTest extends TestCase
     public function testConstructorWrongComponentTypeThrowsException()
     {
         $this->expectException(InvalidGeometryException::class);
-        $this->expectExceptionMessageRegExp('/Cannot create a collection of [a-zA-Z_\\\\]+ components, expected type is.+/');
+        $this->expectExceptionMessageMatches('/Cannot create a collection of [a-zA-Z_\\\\]+ components, expected type is.+/');
 
         new LineString([new LineString(), new LineString()]);
     }
@@ -168,7 +168,7 @@ class LineStringTest extends TestCase
                     [42.5390625, 41.77131167976407],
                     [-13.359375, 38.8225909761771],
                     [18.984375, 17.644022027872726]
-            ], new Point(8.71798087550578, 31.1304531386738)],
+            ], new Point(8.717980875505775, 31.130453138673776)],
             'crossing the antimeridian' => [[[170, 47], [-170, 47]], new Point(0, 47)]
         ];
     }
@@ -217,7 +217,7 @@ class LineStringTest extends TestCase
     public function providerLength() {
         return [
                 [[[0, 0], [10, 0]], 10.0],
-                [[[1, 1], [2, 2], [2, 3.5], [1, 3], [1, 2], [2, 1]], 6.44646111349608],
+                [[[1, 1], [2, 2], [2, 3.5], [1, 3], [1, 2], [2, 1]], 6.446461113496085],
         ];
     }
 
@@ -236,8 +236,8 @@ class LineStringTest extends TestCase
 
     public function providerLength3D() {
         return [
-                [[[0, 0, 0], [10, 0, 10]], 14.142135623731],
-                [[[1, 1, 0], [2, 2, 2], [2, 3.5, 0], [1, 3, 2], [1, 2, 0], [2, 1, 2]], 11.926335310544],
+                [[[0, 0, 0], [10, 0, 10]], 14.142135623730951],
+                [[[1, 1, 0], [2, 2, 2], [2, 3.5, 0], [1, 3, 2], [1, 2, 0], [2, 1, 2]], 11.926335310544065],
         ];
     }
 
@@ -305,7 +305,7 @@ class LineStringTest extends TestCase
     {
         $line = LineString::fromArray($points);
 
-        $this->assertEquals($line->greatCircleLength(), $results['greatCircle'], '', 1e-8);
+        $this->assertEqualsWithDelta($line->greatCircleLength(), $results['greatCircle'], 1e-8);
     }
 
     /**
@@ -318,7 +318,7 @@ class LineStringTest extends TestCase
     {
         $line = LineString::fromArray($points);
 
-        $this->assertEquals($line->haversineLength(), $results['haversine'], '', 1e-7);
+        $this->assertEqualsWithDelta($line->haversineLength(), $results['haversine'], 1e-7);
     }
 
     /**
@@ -331,7 +331,7 @@ class LineStringTest extends TestCase
     {
         $line = LineString::fromArray($points);
 
-        $this->assertEquals($line->vincentyLength(), $results['vincenty'], '', 1e-8);
+        $this->assertEqualsWithDelta($line->vincentyLength(), $results['vincenty'], 1e-8);
     }
 
     public function testVincentyLengthAntipodalPoints()

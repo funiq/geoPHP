@@ -457,7 +457,7 @@ class GPX implements GeoAdapter
     public function collectionToGPX(Collection $geometry): string
     {
         $metadata = self::processGeometryData($geometry, $this->gpxTypes->get('metadataType'));
-        $metadata = empty($metadata) || !in_array('metadataType', $this->gpxTypes->get('gpxType'))
+        $metadata = empty($metadata) || !in_array('metadata', $this->gpxTypes->get('gpxType'))
                 ? ''
                 : "<metadata>\n{$metadata}</metadata>\n\n";
         $wayPoints = $routes = $tracks = "";

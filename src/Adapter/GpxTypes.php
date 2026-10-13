@@ -124,7 +124,7 @@ class GpxTypes
         $this->allowedTrkTypeElements = self::$trkTypeElements;
         $this->allowedRteTypeElements = self::$rteTypeElements;
         $this->allowedWptTypeElements = self::$wptTypeElements;
-        $this->allowedTrkptTypeElements = self::$trkTypeElements;
+        $this->allowedTrkptTypeElements = self::$trkptTypeElements;
         $this->allowedRteptTypeElements = self::$rteptTypeElements;
         $this->allowedMetadataTypeElements = self::$metadataTypeElements;
 
